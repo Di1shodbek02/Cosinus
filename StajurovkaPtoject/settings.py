@@ -1,10 +1,9 @@
-
 import os
 from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
-load_dotenv()
 
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -14,11 +13,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin', # noqa
+    'jazzmin',  # noqa
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -27,11 +25,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'drf_yasg',
 
-
     'main',
     'accounts',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
 
 ]
 
@@ -66,7 +64,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StajurovkaPtoject.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -80,7 +77,6 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -105,6 +101,18 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+        }
+    }
+}
+
+AUTH_USER_MODEL = 'accounts.User'
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
@@ -145,6 +153,7 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
 
 JAZZMIN_SETTINGS = {
     "site_title": "GreenLife",
@@ -232,7 +241,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/

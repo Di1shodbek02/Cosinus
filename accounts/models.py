@@ -1,11 +1,12 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-class User(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='pics')
-    phone_number = models.CharField(max_length=13)
+class User(AbstractUser):
+    phone_number = models.CharField(max_length=13, unique=True, verbose_name='Phone Number')
+    avatar = models.ImageField(upload_to='pics', blank=True, null=True, verbose_name='Avatar')
 
     def __str__(self):
-        return self.first_name + self.last_name
+        return f"{self.first_name} {self.last_name}"
+
+
